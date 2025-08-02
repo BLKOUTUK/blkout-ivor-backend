@@ -1,0 +1,24 @@
+# DigitalOcean App Platform Configuration
+name: blkout-ivor-backend
+services:
+- name: backend
+  source_dir: /
+  github:
+    repo: your-repo-name
+    branch: main
+  run_command: npm start
+  build_command: npm install && npm run build
+  environment_slug: node-js
+  instance_count: 1
+  instance_size_slug: basic-xxs
+  routes:
+  - path: /
+  envs:
+  - key: NODE_ENV
+    value: production
+  - key: PORT
+    value: "8080"
+  - key: FRONTEND_URL
+    value: https://ivor-blkout.vercel.app
+  - key: JWT_SECRET
+    value: blkout_ivor_super_secure_jwt_secret_2025_production

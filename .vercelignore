@@ -1,0 +1,9 @@
+node_modules
+src
+*.log
+.env
+.env.local
+heroku
+heroku.tar.gz
+heroku-install.sh
+README.md
