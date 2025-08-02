@@ -7,8 +7,8 @@ WORKDIR /app
 # Copy package files
 COPY package*.json ./
 
-# Install dependencies
-RUN npm ci --only=production
+# Install ALL dependencies (including dev deps for build)
+RUN npm ci
 
 # Copy source code
 COPY . .
@@ -22,10 +22,12 @@ FROM node:18-alpine AS production
 # Set working directory
 WORKDIR /app
 
-# Copy built application and dependencies
+# Install only production dependencies for runtime
+COPY package*.json ./
+RUN npm ci --only=production
+
+# Copy built application
 COPY --from=builder /app/dist ./dist
-COPY --from=builder /app/node_modules ./node_modules
-COPY --from=builder /app/package*.json ./
 
 # Create data directory for SQLite
 RUN mkdir -p /app/data
