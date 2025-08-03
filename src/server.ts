@@ -15,7 +15,7 @@ import chatRoutes from './routes/chat.routes.sqlite';
 import { logger } from './utils/logger';
 
 const app = express();
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3000;
 const NODE_ENV = process.env.NODE_ENV || 'development';
 
 // Initialize SQLite database
@@ -54,19 +54,15 @@ app.get('/', (req: Request, res: Response) => {
   });
 });
 
-// Health check endpoint
+// Health check endpoint - simplified for Railway
 app.get('/health', (req: Request, res: Response) => {
-  res.json({
+  res.status(200).json({
     status: 'healthy',
     timestamp: new Date().toISOString(),
     uptime: process.uptime(),
     environment: NODE_ENV,
     version: '1.0.0',
-    services: {
-      database: 'operational',
-      ai: process.env.GROQ_API_KEY ? 'operational' : 'disabled',
-      ivor_persona: 'operational'
-    }
+    port: PORT
   });
 });
 

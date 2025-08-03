@@ -58,8 +58,10 @@ export class SQLiteService {
   private dbPath: string;
 
   constructor() {
-    // Use a data directory for the database
-    const dataDir = path.join(process.cwd(), 'data');
+    // Use /tmp for Railway compatibility (ephemeral but works)
+    const dataDir = process.env.NODE_ENV === 'production' 
+      ? '/tmp' 
+      : path.join(process.cwd(), 'data');
     this.dbPath = path.join(dataDir, 'blkout_ivor.sqlite');
   }
 
